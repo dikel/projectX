@@ -4,7 +4,6 @@ onready var tile = preload("res://Scenes/Tile.tscn")
 var row = 1
 
 func _ready():
-	get_node("Player").connect("program_block", self, "signal_handler")
 	
 	#Generate the first row
 	for i in range(8):
@@ -18,10 +17,6 @@ func _ready():
 			s.set_inactive()
 	generate_more_rows()
 
-func signal_handler(tiles):
-	for i in range(tiles.size()):
-		get_tree().call_group(0, "tiles", "set_programmable", tiles[i][0], tiles[i][1])
-	
 func generate_more_rows():
 	for i in range(8):
 		for j in range(8):
