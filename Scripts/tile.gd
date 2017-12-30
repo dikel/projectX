@@ -26,6 +26,7 @@ func set_normal():
 		set_active()
 	else:
 		set_inactive()
+	defining_mode = false
 
 func init(row, col):
 	self.row = row

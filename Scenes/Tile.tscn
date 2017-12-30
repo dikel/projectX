@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10.7143, 13 )
+extents = Vector2( 10, 10 )
 
 [node name="Tile" type="Sprite"]
 
@@ -19,11 +19,11 @@ transform/pos = Vector2( 0.183162, -0.26055 )
 transform/scale = Vector2( 1.99443, 1.49644 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 2.99607, 0, 0, 0.0729829, -0.0811996, -30.6329 )
+shapes/0/transform = Matrix32( 3.13794, 0, 0, 3.13664, 0.407622, 0.723716 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
-one_way_collision/direction = Vector2( 0, 1 )
+one_way_collision/max_depth = -1.0
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 0.0
@@ -31,8 +31,8 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 
-transform/pos = Vector2( -0.0811996, -30.6329 )
-transform/scale = Vector2( 2.99607, 0.0729829 )
+transform/pos = Vector2( 0.407622, 0.723716 )
+transform/scale = Vector2( 3.13794, 3.13664 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0

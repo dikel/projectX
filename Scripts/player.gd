@@ -7,6 +7,9 @@ var programming_mode = false
 var is_falling = false
 var jumping_start_time = 0
 var defining_mode = false
+var lowest_row = 0
+
+signal more_rows(new_rows)
 
 func _integrate_forces(state):
 	
@@ -25,20 +28,23 @@ func _integrate_forces(state):
 	
 	#Movement
 	if(jump and not get_colliding_bodies().empty()):
-		for i in range(0, get_colliding_bodies().size()):
-			if get_colliding_bodies()[i].get_parent().is_active:
+		for i in range(get_colliding_bodies().size()):
+			if (get_colliding_bodies()[i].get_parent().is_active and abs( (get_pos().y) + 77) - get_colliding_bodies()[i].get_parent().get_pos().y < 2):
 				linear_velocity.y = -500
 				break
 	
-	if (get_colliding_bodies().empty() or not get_colliding_bodies().empty() and not get_colliding_bodies()[0].get_parent().is_active):
-		if (is_falling == false):
-			jumping_start_time = OS.get_ticks_msec()
-		is_falling = true
-		if (OS.get_ticks_msec() - jumping_start_time > 3000):
-			print("GAME OVER")
-			get_parent().get_tree().reload_current_scene()
+	if (get_colliding_bodies().empty()):
+		falling()
 	else:
-		is_falling = false
+		for i in range(get_colliding_bodies().size()):
+			if(get_colliding_bodies()[i].get_parent().is_active):
+				is_falling = false
+				if (get_colliding_bodies()[i].get_parent().row > lowest_row):
+					emit_signal("more_rows", get_colliding_bodies()[0].get_parent().row - lowest_row)
+					lowest_row = get_colliding_bodies()[0].get_parent().row
+				break
+			falling()
+			
 	
 	if(move_left):
 		linear_velocity.x = -200
@@ -51,19 +57,35 @@ func _integrate_forces(state):
 	#Prevent rotation
 	if (get_rot() != 0):
 		set_rot(0)
-	
-	if (get_colliding_bodies().size() == 1 and show_options and not defining_mode):
-		defining_mode = true
-		#Sends signal to program the block (tile)
-		var tiles = get_colliding_bodies()[0].get_parent().defining_tiles
-		for i in range(tiles.size()):
-			get_parent().get_tree().call_group(0, "tiles", "set_defining_mode", tiles[i][0], tiles[i][1])
+	if (show_options and not defining_mode):
+		var count = 0
+		var tile_num
+		for i in range(get_colliding_bodies().size()):
+			if (get_colliding_bodies()[i].get_parent().is_active):
+				count += 1
+				tile_num = i
+		if (count == 1):
+			defining_mode = true
+			#Sends signal to program the block (tile)
+			var tiles = get_colliding_bodies()[tile_num].get_parent().defining_tiles
+			for i in range(tiles.size()):
+				get_parent().get_tree().call_group(0, "tiles", "set_defining_mode", tiles[i][0], tiles[i][1])
 		
 	if(move_camera_up):
 		camera.set_pos(camera.get_pos() - Vector2(0, 35))
 	if(move_camera_down):
 		camera.set_pos(camera.get_pos() + Vector2(0, 35))
+		
+func falling():
+	if (is_falling == false):
+		jumping_start_time = OS.get_ticks_msec()
+	is_falling = true
+	if (OS.get_ticks_msec() - jumping_start_time > 3000):
+		print("GAME OVER")
+		print("Score: ", lowest_row)
+		get_parent().get_tree().reload_current_scene()
+		
 func _ready():
-	set_max_contacts_reported(2)
+	set_max_contacts_reported(4)
 	set_contact_monitor(true)
 	
