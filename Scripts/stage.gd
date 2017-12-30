@@ -4,7 +4,6 @@ onready var tile = preload("res://Scenes/Tile.tscn")
 var row = 1
 
 func _ready():
-	
 	#Generate the first row
 	for i in range(8):
 		var s = tile.instance()
