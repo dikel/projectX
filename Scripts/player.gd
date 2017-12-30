@@ -2,9 +2,13 @@ extends RigidBody2D
 
 var WALK_MAX_VELOCITY = 200.0
 var is_jumping = false
+<<<<<<< HEAD
 var programming_mode = false
 var is_falling = false
 var jumping_start_time = 0
+=======
+var defining_mode = false
+>>>>>>> 8f793e2ed3c1ed833c0e09baed08845573cdb739
 
 func _integrate_forces(state):
 	
@@ -17,7 +21,7 @@ func _integrate_forces(state):
 	var move_left = Input.is_action_pressed("move_left")
 	var move_right = Input.is_action_pressed("move_right")
 	var jump = Input.is_action_pressed("jump")
-	var program_tile = Input.is_action_pressed("program_tile")
+	var show_options = Input.is_action_pressed("show_options")
 	
 	#Movement
 	if(jump and not get_colliding_bodies().empty()):
@@ -47,13 +51,19 @@ func _integrate_forces(state):
 	#Prevent rotation
 	if (get_rot() != 0):
 		set_rot(0)
+<<<<<<< HEAD
 		
 	if (get_colliding_bodies().size() == 1 and program_tile and not programming_mode):
 		programming_mode = true
+=======
+	
+	if (get_colliding_bodies().size() == 1 and show_options and not defining_mode):
+		defining_mode = true
+>>>>>>> 8f793e2ed3c1ed833c0e09baed08845573cdb739
 		#Sends signal to program the block (tile)
-		var tiles = get_colliding_bodies()[0].get_parent().programmable_tiles
+		var tiles = get_colliding_bodies()[0].get_parent().defining_tiles
 		for i in range(tiles.size()):
-			get_parent().get_tree().call_group(0, "tiles", "set_programmable", tiles[i][0], tiles[i][1])
+			get_parent().get_tree().call_group(0, "tiles", "set_defining_mode", tiles[i][0], tiles[i][1])
 		
 func _ready():
 	set_max_contacts_reported(2)
