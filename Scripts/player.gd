@@ -2,13 +2,10 @@ extends RigidBody2D
 
 var WALK_MAX_VELOCITY = 200.0
 var is_jumping = false
-<<<<<<< HEAD
 var programming_mode = false
 var is_falling = false
 var jumping_start_time = 0
-=======
 var defining_mode = false
->>>>>>> 8f793e2ed3c1ed833c0e09baed08845573cdb739
 
 func _integrate_forces(state):
 	
@@ -51,15 +48,9 @@ func _integrate_forces(state):
 	#Prevent rotation
 	if (get_rot() != 0):
 		set_rot(0)
-<<<<<<< HEAD
-		
-	if (get_colliding_bodies().size() == 1 and program_tile and not programming_mode):
-		programming_mode = true
-=======
 	
 	if (get_colliding_bodies().size() == 1 and show_options and not defining_mode):
 		defining_mode = true
->>>>>>> 8f793e2ed3c1ed833c0e09baed08845573cdb739
 		#Sends signal to program the block (tile)
 		var tiles = get_colliding_bodies()[0].get_parent().defining_tiles
 		for i in range(tiles.size()):
