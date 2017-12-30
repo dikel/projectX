@@ -9,6 +9,8 @@ func _integrate_forces(state):
 	var linear_velocity = state.get_linear_velocity()
 	
 	#Controls
+	var move_camera_up = Input.is_action_pressed("camera_up")
+    var move_camera_down = Input.is_action_pressed("camera_down")
 	var move_left = Input.is_action_pressed("move_left")
 	var move_right = Input.is_action_pressed("move_right")
 	var jump = Input.is_action_pressed("jump")
