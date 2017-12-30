@@ -2,9 +2,15 @@ extends RigidBody2D
 
 var WALK_MAX_VELOCITY = 200.0
 var is_jumping = false
+var programming_mode = false
+var is_falling = false
+var jumping_start_time = 0
 var defining_mode = false
 
 func _integrate_forces(state):
+	
+	#Get FPS (If you feel lag)
+	#print(str(OS.get_frames_per_second()))
 	
 	var linear_velocity = state.get_linear_velocity()
 	
@@ -21,9 +27,18 @@ func _integrate_forces(state):
 		for i in range(0, get_colliding_bodies().size()):
 			if get_colliding_bodies()[i].get_parent().is_active:
 				linear_velocity.y = -500
-				is_jumping = true
 				break
-		
+	
+	if (get_colliding_bodies().empty() or not get_colliding_bodies().empty() and not get_colliding_bodies()[0].get_parent().is_active):
+		if (is_falling == false):
+			jumping_start_time = OS.get_ticks_msec()
+		is_falling = true
+		if (OS.get_ticks_msec() - jumping_start_time > 3000):
+			print("GAME OVER")
+			get_parent().get_tree().reload_current_scene()
+	else:
+		is_falling = false
+	
 	if(move_left):
 		linear_velocity.x = -200
 	if (move_right):
