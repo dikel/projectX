@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+onready var camera = get_node("Camera2D")
 var WALK_MAX_VELOCITY = 200.0
 var is_jumping = false
 var programming_mode = false
@@ -16,7 +17,7 @@ func _integrate_forces(state):
 	
 	#Controls
 	var move_camera_up = Input.is_action_pressed("camera_up")
-    var move_camera_down = Input.is_action_pressed("camera_down")
+	var move_camera_down = Input.is_action_pressed("camera_down")
 	var move_left = Input.is_action_pressed("move_left")
 	var move_right = Input.is_action_pressed("move_right")
 	var jump = Input.is_action_pressed("jump")
@@ -58,6 +59,11 @@ func _integrate_forces(state):
 		for i in range(tiles.size()):
 			get_parent().get_tree().call_group(0, "tiles", "set_defining_mode", tiles[i][0], tiles[i][1])
 		
+	if(move_camera_up):
+		camera.set_pos(camera.get_pos() - Vector2(0, 35))
+	if(move_camera_down):
+		camera.set_pos(camera.get_pos() + Vector2(0, 35))
 func _ready():
 	set_max_contacts_reported(2)
 	set_contact_monitor(true)
+	
