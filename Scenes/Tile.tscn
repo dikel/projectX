@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://tile1.png" type="Texture" id=1]
+[ext_resource path="res://Textures/inactive_tile.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/tile.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10.7143, 13 )
+extents = Vector2( 10.7143, 15.0986 )
 
 [node name="Tile" type="Sprite"]
 
@@ -19,7 +19,7 @@ transform/pos = Vector2( 0.183162, -0.26055 )
 transform/scale = Vector2( 1.99443, 1.49644 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 2.3391, 0, 0, 0.0744779, -0.0791063, -30.609 )
+shapes/0/transform = Matrix32( 2.32049, 0, 0, 0.27174, -0.0898624, -26.5795 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -30,8 +30,8 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 
-transform/pos = Vector2( -0.0791063, -30.609 )
-transform/scale = Vector2( 2.3391, 0.0744779 )
+transform/pos = Vector2( -0.0898624, -26.5795 )
+transform/scale = Vector2( 2.32049, 0.27174 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
